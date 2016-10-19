@@ -30,13 +30,18 @@ def CaesarCipher(string, key):
 
 
 '''
-参数：接收加密后的字符串
-返回：反凯撒加密的结果。长度为26的数组，每个元素为set(key, originStr)
+参数：接收加密后的字符串。可选参数为key
+返回：无key时暴力破解凯撒加密，返回长26的数组。每个元素为：[key, originStr]
+返回：有key时返回用key解凯撒加密后的结果：[key, originStr]
 '''
-def DeCaesarCipher(string):
+def DeCaesarCipher(string, key=None):
+    if key:
+        r = range(key, key+1, 1)
+    else:
+        r = range(26)
     result = []
-    # 遍历26个密钥
-    for key in range(26):
+    # 如果带key则r只有一个元素，不带key时r有26个元素
+    for key in r:
         decryptArr = []
         for ch in string:
             # 如果不是字符则不用解密
@@ -58,7 +63,8 @@ def DeCaesarCipher(string):
 
         result.append([key, ''.join(decryptArr)])
 
-    return result
+    # 如果result长度为1则说明指定了key，去掉外层数组
+    return result[0] if len(result) == 1 else result
 
 
 def main():
