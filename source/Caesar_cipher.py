@@ -63,8 +63,7 @@ def DeCaesarCipher(string, key=None):
 
         result.append([key, ''.join(decryptArr)])
 
-    # 如果result长度为1则说明指定了key，去掉外层数组
-    return result[0] if len(result) == 1 else result
+    return result
 
 
 def main():
@@ -78,9 +77,8 @@ def main():
     print('After Caesar Cipher  :', encryptStr)
 
     print('\nforce decrypting...')
-    for decryptSet in DeCaesarCipher(encryptStr):
-        print('Key #{0[0]}: {0[1]}'.format(decryptSet))
+    for key, decryptStr in DeCaesarCipher(encryptStr):
+        print('Key #{0}: {1}'.format(key, decryptStr))
 
 if __name__ == '__main__':
     main()
-    input()
