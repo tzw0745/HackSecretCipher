@@ -94,7 +94,6 @@ def main():
     print(TranDecrypt1(8, encryptStr))
     for decryptList in TranDecrypt(encryptStr):
         print(decryptList)
-    # print('Key #{0[0]}: {0[1]}'.format(decryptList))
 
 
 if __name__ == '__main__':
