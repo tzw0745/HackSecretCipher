@@ -92,8 +92,8 @@ def main():
 
     print('\nforce decrypting...')
     print(TranDecrypt1(8, encryptStr))
-    # for decryptList in TranDecrypt(encryptStr):
-    #    print(decryptList)
+    for decryptList in TranDecrypt(encryptStr):
+        print(decryptList)
     # print('Key #{0[0]}: {0[1]}'.format(decryptList))
 
 
