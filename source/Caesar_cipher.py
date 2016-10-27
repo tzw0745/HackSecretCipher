@@ -1,9 +1,12 @@
-"""
-参数：接收源字符串，密钥
-参数：密钥范围为0-25
-返回：经过凯撒加密后的字符串
-"""
+# !/usr/bin/env python
+# coding:utf-8
+
 def CaesarCipher(plainText, key):
+    """
+    参数：接收源字符串，密钥
+    参数：密钥范围为0-25
+    返回：经过凯撒加密后的字符串
+    """
     # 检查密钥范围
     if key < 0 or key > 25:
         raise ValueError
@@ -28,12 +31,12 @@ def CaesarCipher(plainText, key):
         encryptArr.append(chr(i))
     return ''.join(encryptArr)
 
-"""
-参数：接收加密后的字符串。可选参数为key
-返回：无key时暴力破解凯撒加密，返回长26的数组。每个元素为：[key, originStr]
-返回：有key时返回用key解凯撒加密后的结果：[key, originStr]
-"""
 def DeCaesarCipher(cipherText, key=None):
+    """
+    参数：接收加密后的字符串。可选参数为key
+    返回：无key时暴力破解凯撒加密，返回长26的数组。每个元素为：[key, originStr]
+    返回：有key时返回用key解凯撒加密后的结果：[key, originStr]
+    """
     if key:
         r = range(key, key+1, 1)
     else:

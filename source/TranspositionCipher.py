@@ -1,3 +1,6 @@
+# !/usr/bin/env python
+# coding:utf-8
+
 """
 说明：用换位加密法加密字符串
 参数：plainText为待加密字符串，key为加密密钥
@@ -15,13 +18,13 @@ def TranEncrypt(plainText, key):
 
     return ''.join(encryptArr)
 
-"""
-说明：用换位加密法解密字符串，自己写的版本
-参数：cipherText为被加密的字符串，key为解密密钥
-参数：当key为空时暴力破解，遍历从2到n/2的密钥（n为字符串长度）
-返回：列表，解码或暴力破解的结果
-"""
 def TranDecrypt(cipherText, key=None):
+    """
+    说明：用换位加密法解密字符串，自己写的版本
+    参数：cipherText为被加密的字符串，key为解密密钥
+    参数：当key为空时暴力破解，遍历从2到n/2的密钥（n为字符串长度）
+    返回：列表，解码或暴力破解的结果
+    """
     if key:
         r = range(key, key + 1, 1)
     else:
@@ -54,12 +57,12 @@ def TranDecrypt(cipherText, key=None):
 
     return result
 
-"""
-说明：用换位加密法解密字符串，作者写的版本
-参数：解密密钥key和待解密字符串message
-返回：被解密的字符串
-"""
 def TranDecrypt1(key, message):
+    """
+    说明：用换位加密法解密字符串，作者写的版本
+    参数：解密密钥key和待解密字符串message
+    返回：被解密的字符串
+    """
     import math
     numOfColumns = math.ceil(len(message) / key)
     numOfRows = key
