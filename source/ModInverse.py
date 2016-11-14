@@ -8,6 +8,12 @@ chapter 14
 
 def GCD(a, b):
     """
+
+    :param a:
+    :param b:
+    :return:
+    """
+    """
     说明：欧几里得算法求最大公约数
     输入：整数a和b
     返回：a和b最大公约数

@@ -3,7 +3,7 @@
 
 def CaesarCipher(plainText, key):
     """
-
+    凯撒加密
     :param plainText: 明文
     :param key: 密钥，0-25
     :return: 凯撒加密后的字符串
@@ -35,7 +35,7 @@ def CaesarCipher(plainText, key):
 
 def DeCaesarCipher(cipherText, key=None):
     """
-
+    凯撒解密
     :param cipherText: 密文
     :param key: 有时解密，无时暴力破解
     :return: [[key, plainText], ...]
