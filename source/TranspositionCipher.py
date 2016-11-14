@@ -1,13 +1,14 @@
 # !/usr/bin/env python
 # coding:utf-8
 
-"""
-说明：用换位加密法加密字符串
-参数：plainText为待加密字符串，key为加密密钥
-参数：key要小于字符串长度的一半
-返回：加密后的字符串
-"""
+
 def TranEncrypt(plainText, key):
+    """
+    换位加密法加密字符串
+    :param plainText: 明文
+    :param key: 密钥，小于明文长度的一半
+    :return: 密文
+    """
     if key * 2 > len(plainText):
         raise ValueError('key should less than a half of plainText length')
 
@@ -18,12 +19,13 @@ def TranEncrypt(plainText, key):
 
     return ''.join(encryptArr)
 
+
 def TranDecrypt(cipherText, key=None):
     """
-    说明：用换位加密法解密字符串，自己写的版本
-    参数：cipherText为被加密的字符串，key为解密密钥
-    参数：当key为空时暴力破解，遍历从2到n/2的密钥（n为字符串长度）
-    返回：列表，解码或暴力破解的结果
+    用换位加密法解密字符串
+    :param cipherText: 密文
+    :param key: 密钥，有时解密，无时暴力破解（密钥遍历2-n/2）
+    :return: [[key, plainText], ...]
     """
     if key:
         r = range(key, key + 1, 1)
@@ -57,11 +59,13 @@ def TranDecrypt(cipherText, key=None):
 
     return result
 
+
 def TranDecrypt1(key, message):
     """
-    说明：用换位加密法解密字符串，作者写的版本
-    参数：解密密钥key和待解密字符串message
-    返回：被解密的字符串
+    用换位加密法解密字符串,原书版本
+    :param key: 密钥
+    :param message: 密文
+    :return: 明文
     """
     import math
     numOfColumns = math.ceil(len(message) / key)

@@ -8,15 +8,10 @@ chapter 14
 
 def GCD(a, b):
     """
-
-    :param a:
-    :param b:
-    :return:
-    """
-    """
-    说明：欧几里得算法求最大公约数
-    输入：整数a和b
-    返回：a和b最大公约数
+    求最大公约数
+    :param a: 整数a
+    :param b: 整数b
+    :return: a和b的最大公约数
     """
     while a != 0:
         a, b = b % a, a
@@ -26,9 +21,10 @@ def GCD(a, b):
 
 def ModInverse(a, m):
     """
-    说明：用欧几里得扩展算法找两个数字的模逆
-    参数：整数a和m
-    返回：a和m的模逆
+    欧几里得扩展算法求a和b的模逆
+    :param a: 整数a
+    :param m: 整数m
+    :return: a和m的模逆
     """
     # 如果a和m不互质则不存在模逆
     if GCD(a, m) != 1:

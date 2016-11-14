@@ -1,6 +1,7 @@
 # !/usr/bin/env python
 # coding:utf-8
 
+
 def CaesarCipher(plainText, key):
     """
     凯撒加密
@@ -37,7 +38,7 @@ def DeCaesarCipher(cipherText, key=None):
     """
     凯撒解密
     :param cipherText: 密文
-    :param key: 有时解密，无时暴力破解
+    :param key: 密钥，有时解密，无时暴力破解
     :return: [[key, plainText], ...]
     """
     if key:
