@@ -3,9 +3,10 @@
 
 def CaesarCipher(plainText, key):
     """
-    参数：接收源字符串，密钥
-    参数：密钥范围为0-25
-    返回：经过凯撒加密后的字符串
+
+    :param plainText: 明文
+    :param key: 密钥，0-25
+    :return: 凯撒加密后的字符串
     """
     # 检查密钥范围
     if key < 0 or key > 25:
@@ -21,8 +22,8 @@ def CaesarCipher(plainText, key):
         if ch.isalpha():
             # 加密并循环字母
             i = ord(ch) + key
-            if ch.islower() and not chr(i).islower()\
-                or ch.isupper() and not chr(i).isupper():
+            if ch.islower() and not chr(i).islower() \
+                    or ch.isupper() and not chr(i).isupper():
                 i -= 26
         else:
             i = ord(ch) + key % 10
@@ -31,14 +32,16 @@ def CaesarCipher(plainText, key):
         encryptArr.append(chr(i))
     return ''.join(encryptArr)
 
+
 def DeCaesarCipher(cipherText, key=None):
     """
-    参数：接收加密后的字符串。可选参数为key
-    返回：无key时暴力破解凯撒加密，返回长26的数组。每个元素为：[key, originStr]
-    返回：有key时返回用key解凯撒加密后的结果：[key, originStr]
+
+    :param cipherText: 密文
+    :param key: 有时解密，无时暴力破解
+    :return: [[key, plainText], ...]
     """
     if key:
-        r = range(key, key+1, 1)
+        r = range(key, key + 1, 1)
     else:
         r = range(26)
     result = []
@@ -54,8 +57,8 @@ def DeCaesarCipher(cipherText, key=None):
             if ch.isalpha():
                 # 解密并循环字母
                 i = ord(ch) - key
-                if ch.islower() and not chr(i).islower()\
-                    or ch.isupper() and not chr(i).isupper():
+                if ch.islower() and not chr(i).islower() or \
+                                ch.isupper() and not chr(i).isupper():
                     i += 26
             else:
                 i = ord(ch) - key % 10
@@ -81,6 +84,7 @@ def main():
     print('\nforce decrypting...')
     for key, plainText in DeCaesarCipher(cipherText):
         print('Key #{0}: {1}'.format(key, plainText))
+
 
 if __name__ == '__main__':
     main()
