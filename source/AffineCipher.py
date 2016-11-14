@@ -81,6 +81,7 @@ if __name__ == '__main__':
     plain = """"A computer would deserve to be called intelligent if it \
 could deceive a human into believing that it was human." -Alan Turing"""
     print('origin text   :', plain)
+
     key = 2023
     print('\nthe key of affine cipher :', key)
 
