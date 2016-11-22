@@ -1,5 +1,6 @@
 # !/usr/bin/env python
 # coding:utf-8
+from source.English import isEngSen
 
 
 def CaesarCipher(plainText, key):
@@ -73,7 +74,7 @@ def DeCaesarCipher(cipherText, key=None):
 
 
 def main():
-    plainText = 'My bank password is 123456'
+    plainText = 'our bank password is 123456'
     keyNum = 8
     print('The origin string    :', plainText)
     print('The Caesar Cipher Key:', keyNum)
@@ -84,7 +85,8 @@ def main():
 
     print('\nforce decrypting...')
     for key, plainText in DeCaesarCipher(cipherText):
-        print('Key #{0}: {1}'.format(key, plainText))
+        if isEngSen(plainText):
+            print('Key #{0}: {1}'.format(key, plainText))
 
 
 if __name__ == '__main__':

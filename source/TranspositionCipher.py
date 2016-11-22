@@ -1,5 +1,6 @@
 # !/usr/bin/env python
 # coding:utf-8
+from source.English import isEngSen
 
 
 def TranEncrypt(plainText, key):
@@ -98,9 +99,9 @@ def main():
     print('After Cipher         :', encryptStr)
 
     print('\nforce decrypting...')
-    print(TranDecrypt1(8, encryptStr))
-    for decryptList in TranDecrypt(encryptStr):
-        print(decryptList)
+    for key, plainText in TranDecrypt(encryptStr):
+        if isEngSen(plainText):
+            print(key, plainText)
 
 
 if __name__ == '__main__':
