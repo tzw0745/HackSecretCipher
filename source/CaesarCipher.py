@@ -81,7 +81,7 @@ def caesar_decipher(cipher_text, key=None):
 
 
 def main():
-    plain_text = 'My Bank Password is 123'
+    plain_text = 'Two big mad jocks help fax every quiz. 123'
     key = 8
     print('The origin string    :', plain_text)
     print('The Caesar Cipher Key:', key)
