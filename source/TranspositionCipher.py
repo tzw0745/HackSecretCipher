@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # coding:utf-8
-from source.English import isEngSen
+from source.IsEnglish import is_english
 
 
 def TranEncrypt(plainText, key):
@@ -100,7 +100,7 @@ def main():
 
     print('\nforce decrypting...')
     for key, plainText in TranDecrypt(encryptStr):
-        if isEngSen(plainText):
+        if is_english(plainText):
             print(key, plainText)
 
 

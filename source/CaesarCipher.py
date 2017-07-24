@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # coding:utf-8
-from source.English import isEngSen
+from source.IsEnglish import is_english
 
 
 def caesar_cipher(plain_text, key):
@@ -81,7 +81,7 @@ def caesar_decipher(cipher_text, key=None):
 
 
 def main():
-    plain_text = 'our bank password is 123456'
+    plain_text = 'My Bank Password is 123'
     key = 8
     print('The origin string    :', plain_text)
     print('The Caesar Cipher Key:', key)
@@ -92,7 +92,7 @@ def main():
 
     print('\nforce decrypting...')
     for key, plain_text in caesar_decipher(cipher_text):
-        if isEngSen(plain_text):
+        if is_english(plain_text):
             print('Key #{0}: {1}'.format(key, plain_text))
 
 

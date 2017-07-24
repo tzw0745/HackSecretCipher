@@ -9,7 +9,7 @@ import re
 dic = None
 
 
-def isEngSen(sentence, level=0.5):
+def is_english(sentence, level=0.5):
     global dic
     if not dic:
         with open('dictionary.txt', 'r') as f:
@@ -22,7 +22,7 @@ def isEngSen(sentence, level=0.5):
 
 
 def main():
-    print(isEngSen('what do you make of this sentence?'))
+    print(is_english('what do you make of this sentence?'))
 
 
 if __name__ == '__main__':
