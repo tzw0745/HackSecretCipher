@@ -7,32 +7,26 @@ def caesar_cipher(plain_text, key):
     """
     凯撒加密
     :param plain_text: 明文
-    :param key: 密钥，0-25
+    :param key: 密钥，1-25
     :return: 凯撒加密后的字符串
     """
     # 检查密钥范围
-    if key < 0 or key > 25:
+    if not 1 <= key <= 25:
         raise ValueError
 
     result_arr = []
     for ch in plain_text:
-        # 忽略非字母和数字
-        if not ch.isalpha() and not ch.isdigit():
-            result_arr.append(ch)
-            continue
-
         if ch.islower():
             i = ord(ch) + key
-            if not chr(i).islower():
-                i -= 26
+            i = i if chr(i).islower() else i - 26
         elif ch.isupper():
             i = ord(ch) + key
-            if not chr(i).isupper():
-                i -= 26
-        else:
+            i = i if chr(i).isupper() else i - 26
+        elif ch.isdigit():
             i = ord(ch) + key % 10
-            if not chr(i).isdigit():
-                i -= 10
+            i = i if chr(i).isdigit() else i - 10
+        else:
+            i = ord(ch)
         result_arr.append(chr(i))
     return ''.join(result_arr)
 
@@ -41,43 +35,17 @@ def caesar_decipher(cipher_text, key=None):
     """
     凯撒解密
     :param cipher_text: 密文
-    :param key: 密钥，0-25，有时解密，无时暴力破解
+    :param key: 密钥，1-25，有时解密，无时暴力破解
     :return: [[key, plainText], ...]
     """
     if key:
-        # 检查密钥范围
-        if key < 0 or key > 25:
+        if not 1 <= key <= 25:
             raise ValueError
         r = [key]
     else:
-        r = range(26)
+        r = range(1, 26, 1)
 
-    result_arr = []
-    for key in r:
-        decrypt_arr = []
-        for ch in cipher_text:
-            # 忽略非字母和数字
-            if not ch.isalpha() and not ch.isdigit():
-                decrypt_arr.append(ch)
-                continue
-
-            if ch.islower():
-                i = ord(ch) - key
-                if not chr(i).islower():
-                    i += 26
-            elif ch.isupper():
-                i = ord(ch) - key
-                if not chr(i).isupper():
-                    i += 26
-            else:
-                i = ord(ch) - key % 10
-                if not chr(i).isdigit():
-                    i += 10
-            decrypt_arr.append(chr(i))
-
-        result_arr.append([key, ''.join(decrypt_arr)])
-
-    return result_arr
+    return map(lambda x: [x, caesar_cipher(cipher_text, 26 - x)], r)
 
 
 def main():
