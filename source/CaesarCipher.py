@@ -12,7 +12,7 @@ def caesar_cipher(plain_text, key):
     """
     # 检查密钥范围
     if not 1 <= key <= 25:
-        raise ValueError
+        raise ValueError('key error')
 
     result_arr = []
     for ch in plain_text:
@@ -40,7 +40,7 @@ def caesar_decipher(cipher_text, key=None):
     """
     if key:
         if not 1 <= key <= 25:
-            raise ValueError
+            raise ValueError('key error')
         r = [key]
     else:
         r = range(1, 26, 1)
