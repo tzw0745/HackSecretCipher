@@ -45,7 +45,7 @@ def caesar_decipher(cipher_text, key=None):
     else:
         r = range(1, 26, 1)
 
-    return map(lambda x: [x, caesar_cipher(cipher_text, 26 - x)], r)
+    return list(map(lambda x: [x, caesar_cipher(cipher_text, 26 - x)], r))
 
 
 def main():
