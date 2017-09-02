@@ -3,7 +3,6 @@
 """
 Created by tzw0745 on 2016/11/18.
 """
-import traceback
 import re
 
 dic = None
@@ -21,19 +20,6 @@ def is_english(sentence, level=0.5):
     return len(words - dic) / len(words) < level
 
 
-def main():
-    print(is_english('what do you make of this sentence?'))
-
-
 if __name__ == '__main__':
-    splitLine = '-' * 80
-    print(splitLine)
-    try:
-        main()
-        print('\nall done')
-    except:
-        error = traceback.format_exc()
-        print(error)
-    finally:
-        print(splitLine)
-        input()
+    print(is_english('We are not born with courage,'
+                     ' but neither are we born with fear.'))
