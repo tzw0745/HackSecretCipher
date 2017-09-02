@@ -48,7 +48,8 @@ def tran_decrypt(cipher_text, key=None):
         if len(cipher_arr) % key != 0:
             for i in range(len(cipher_arr) % key + 1, key + 1, 1):
                 cipher_arr.insert(i * ceil - 1, '')
-        result.append([key, tran_encrypt(cipher_arr, ceil)])
+        result.append({'key': key,
+                       'text': tran_encrypt(cipher_arr, ceil)})
     return result
 
 
@@ -56,16 +57,16 @@ def main():
     plain_text = 'Two big mad jocks help fax every quiz. 123'
     key = 8
     print('The origin string    :', plain_text)
-    print('The Caesar Cipher Key:', key)
+    print('The Tran Cipher Key  :', key)
 
-    cipher_text = tran_encrypt(plain_text, key)
     print('encrypting...')
-    print('After Caesar Cipher  :', cipher_text)
+    cipher_text = tran_encrypt(plain_text, key)
+    print('After Tran Cipher    :', cipher_text)
 
     print('\nforce decrypting...')
-    for key, plain_text in tran_decrypt(cipher_text):
-        if is_english(plain_text):
-            print('Key #{0}: {1}'.format(key, plain_text))
+    for info in tran_decrypt(cipher_text):
+        if is_english(info.get('text')):
+            print('Key #{key}: {text}'.format_map(info))
 
 
 if __name__ == '__main__':

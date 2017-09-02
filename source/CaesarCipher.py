@@ -45,7 +45,7 @@ def caesar_decrypt(cipher_text, key=None):
     else:
         r = range(1, 26, 1)
 
-    return list(map(lambda x: [x, caesar_encrypt(cipher_text, 26 - x)], r))
+    return list(map(lambda x: {'key': x, 'text': caesar_encrypt(cipher_text, 26 - x)}, r))
 
 
 def main():
@@ -54,14 +54,14 @@ def main():
     print('The origin string    :', plain_text)
     print('The Caesar Cipher Key:', key)
 
-    cipher_text = caesar_encrypt(plain_text, key)
     print('encrypting...')
+    cipher_text = caesar_encrypt(plain_text, key)
     print('After Caesar Cipher  :', cipher_text)
 
     print('\nforce decrypting...')
-    for key, plain_text in caesar_decrypt(cipher_text):
-        if is_english(plain_text):
-            print('Key #{0}: {1}'.format(key, plain_text))
+    for info in caesar_decrypt(cipher_text):
+        if is_english(info.get('text')):
+            print('Key #{key}: {text}'.format_map(info))
 
 
 if __name__ == '__main__':
