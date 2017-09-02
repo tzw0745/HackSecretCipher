@@ -55,7 +55,6 @@ def get_word_pattern(word):
 
 
 def main():
-    # 因为简单替换加密法的暴力破解对短句子太不友好了
     plain_text = 'Two big mad jocks help fax every quiz. 123'
     key = ''.join(reversed(LETTERS))
     print('The origin string    :', plain_text)
