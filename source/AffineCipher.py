@@ -1,92 +1,97 @@
 # !/usr/bin/env python
 # coding:utf-8
 """
-Created by tzw0745 on 2016/11/14.
+Created by tzw0745 on 2017/9/2.
 """
-from source.ModInverse import GCD, ModInverse
+import math
 
-SYMBOLS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]\
-^_`abcdefghijklmnopqrstuvwxyz{|}~"""
+from source.IsEnglish import is_english
+
+LETTERS = ''.join([chr(x) for x in range(32, 127, 1)])
 
 
-def SplitKey(key):
+def affine_encrypt(plain_text, key_a, key_b, letters=None):
     """
-    分解仿射加密密钥：乘数加密密钥，凯撒加密密钥
-    :param key: 仿射加密密钥
-    :return: set(乘数加密密钥，凯撒加密密钥)
-    """
-    keyA = key // len(SYMBOLS)
-    keyB = key % len(SYMBOLS)
-    return keyA, keyB
-
-
-def CheckKeys(keyA, keyB, mode):
-    """
-    验证仿射加密密钥：乘数加密密钥，凯撒加密密钥的有效性
-    :param keyA: 乘数加密密钥
-    :param keyB: 凯撒加密密钥
-    :param mode: 'encrypt'或'decrypt'
-    :return: 无，如密钥无效，则程序将退出
-    """
-    if mode == 'encrypt' and keyA == 1:
-        exit('仿射加密：乘数加密密钥不能为1。')
-    if mode == 'encrypt' and keyB == 0:
-        exit('仿射加密：凯撒加密密钥不能为0。')
-    if keyA < 0 or keyB < 0 or keyB > len(SYMBOLS) - 1:
-        temp = '仿射加密：乘数加密的密钥必须大于0，凯撒加密的密钥必须在0和{}之间。'
-        exit(temp.format(len(SYMBOLS) - 1))
-    if GCD(keyA, len(SYMBOLS)) != 1:
-        exit('仿射加密：乘数加密密钥必须和{}互质。'.format(len(SYMBOLS)))
-
-
-def AffineEncrypt(plainText, key):
-    """
-    仿射加密法用密钥加密明文成密文
-    :param plainText: 明文
-    :param key: 密钥
+    仿射加密法加密
+    :param plain_text: 明文
+    :param key_a: 乘数加密法密钥，大于1并和字符集长度互质
+    :param key_b: 凯撒加密法密钥，大于0
+    :param letters: 字符集，默认为预设字符集
     :return: 密文
     """
-    keyA, keyB = SplitKey(key)
-    CheckKeys(keyA, keyB, 'encrypt')
-    cipherText = []
-    for symbol in plainText:
-        p = SYMBOLS.find(symbol)
-        ch = symbol if p == -1 else SYMBOLS[(p * keyA + keyB) % len(SYMBOLS)]
-        cipherText.append(ch)
+    s = letters if letters else LETTERS
+    if key_a < 2 or math.gcd(key_a, len(s)) != 1:
+        raise ValueError('key a not correct')
+    key_b = key_b % len(s)
+    if key_b < 1:
+        raise ValueError('key b not correct')
 
-    return ''.join(cipherText)
+    return ''.join(s[(s.find(x) * key_a + key_b) % len(s)]
+                   for x in plain_text)
 
 
-def AffineDecrypt(cipherText, key):
+def inverse_mod(a, m):
+    if math.gcd(a, m) != 1:
+        return None
+    u1, u2, u3 = 1, 0, a
+    v1, v2, v3 = 0, 1, m
+    while v3 != 0:
+        q = u3 // v3
+        v1, v2, v3, u1, u2, u3 = (u1 - q * v1), (u2 - q * v2), \
+                                 (u3 - q * v3), v1, v2, v3
+    return u1 % m
+
+
+def affine_decrypt(cipher_text, key_a=None, key_b=None, letters=None):
     """
-    仿射加密法用密钥解密密文成明文
-    :param cipherText: 密文
-    :param key: 密钥
+    仿射加密法解密
+    :param cipher_text: 密文
+    :param key_a: 乘数加密法密钥，大于1并和字符集长度互质，无时暴力破解
+    :param key_b: 凯撒加密法密钥，大于0，无时暴力破解
+    :param letters: 字符集，默认为预设字符集
     :return: 明文
     """
-    keyA, keyB = SplitKey(key)
-    CheckKeys(keyA, keyB, 'decrypt')
-    plainText = []
-    modInvA = ModInverse(keyA, len(SYMBOLS))
+    s = letters if letters else LETTERS
+    if key_a is not None and key_b is not None:
+        if key_a < 2 or math.gcd(key_a, len(s)) != 1:
+            raise ValueError('key a not correct')
+        key_b = key_b % len(s)
+        if key_b < 1:
+            raise ValueError('key b not correct')
 
-    for symbol in cipherText:
-        p = SYMBOLS.find(symbol)
-        ch = symbol if p == -1 else SYMBOLS[(p - keyB) * modInvA % len(SYMBOLS)]
-        plainText.append(ch)
+        key_a = inverse_mod(key_a, len(s))
+        return ''.join(s[(s.find(x) - key_b) * key_a % len(s)]
+                       for x in cipher_text)
 
-    return ''.join(plainText)
+    force_result = []
+    for key_a in range(2, len(s), 1):
+        for key_b in range(1, len(s), 1):
+            try:
+                text = affine_decrypt(cipher_text, key_a, key_b, s)
+            except ValueError:
+                continue
+            force_result.append({'key_a': key_a,
+                                 'key_b': key_b,
+                                 'text': text})
+    return force_result
+
+
+def main():
+    plain_text = 'Two big mad jocks help fax every quiz. 123'
+    key_a = 123456789
+    key_b = 123456789
+    print('The origin string    :', plain_text)
+    print('The Affine Cipher Key:', key_a, key_b)
+
+    print('encrypting...')
+    cipher_text = affine_encrypt(plain_text, key_a, key_b)
+    print('After Affine Cipher  :', cipher_text)
+
+    print('\nforce decrypting...')
+    for info in affine_decrypt(cipher_text):
+        if is_english(info.get('text')):
+            print('Key #{key_a}, #{key_b}: {text}'.format_map(info))
 
 
 if __name__ == '__main__':
-    plain = """"A computer would deserve to be called intelligent if it \
-could deceive a human into believing that it was human." -Alan Turing"""
-    print('origin text   :', plain)
-
-    key = 2023
-    print('\nthe key of affine cipher :', key)
-
-    cipher = AffineEncrypt(plain, key)
-    print('\nafter encrypt :', cipher)
-
-    plain = AffineDecrypt(cipher, key)
-    print('\nafter decrypt :', plain)
+    main()
