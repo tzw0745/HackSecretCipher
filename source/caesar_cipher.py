@@ -39,7 +39,7 @@ def caesar_decrypt(ciphertext: str, key: int):
     :param key: 密钥
     :return: 明文，字符串
     """
-    key = len(LETTERS) - key % len(LETTERS)
+    key = (len(LETTERS) - key) % len(LETTERS)
     return caesar_encrypt(ciphertext, key)
 
 
