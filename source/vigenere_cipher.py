@@ -31,11 +31,12 @@ def vigenere_encrypt(plaintext: str, key: str):
 
     def _encrypt(_c):
         global _offset
+        _index = LETTERS.find(_c)
+        if _index == -1:
+            return _c
         _key_ch = key[_offset]
         _offset = (_offset + 1) % len(key)
-        _index = LETTERS.find(_c)
-        return _c if _index == -1 else \
-            LETTERS[(_index + LETTERS.find(_key_ch)) % len(LETTERS)]
+        return LETTERS[(_index + LETTERS.find(_key_ch)) % len(LETTERS)]
 
     return ''.join(map(_encrypt, plaintext))
 
@@ -59,9 +60,7 @@ def vigenere_decrypt(ciphertext: str, key: str):
 
 def main():
     plaintext = 'Two big mad jocks help fax every quiz. 123'
-    key = list(LETTERS)
-    random.shuffle(key)
-    key = ''.join(key)
+    key = ''.join(random.choice(LETTERS) for _ in range(50))
 
     print('--- Vigenere Cipher Demon ---')
     print('Origin String :', plaintext)
